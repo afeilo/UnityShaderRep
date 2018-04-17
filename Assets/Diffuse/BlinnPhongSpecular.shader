@@ -10,13 +10,12 @@ Shader "Unlit/BlinnPhongSpecular"
 	}
 	SubShader
 	{
-		Tags { 
-			"RenderType"="Opaque"
-			"LightMode"="ForwardBase" }
 		LOD 100
 
 		Pass
 		{
+			Tags { 
+			"LightMode"="ForwardBase" }
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
