@@ -1,4 +1,4 @@
-﻿Shader "Unlit/GaussianBlur"
+Shader "Unlit/GaussianBlur"
 {
 	Properties
 	{
