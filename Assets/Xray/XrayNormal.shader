@@ -16,6 +16,8 @@
 		Pass
 		{
 			Blend SrcAlpha One
+			ZWrite off
+			Lighting off
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
@@ -50,6 +52,7 @@
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				TANGENT_SPACE_ROTATION;
 				o.viewDir = normalize(mul(rotation,ObjSpaceViewDir(v.vertex)));
+				o.uv = v.uv;
 				return o;
 			}
 			
