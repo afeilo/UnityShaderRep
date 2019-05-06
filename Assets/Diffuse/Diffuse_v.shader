@@ -35,7 +35,8 @@ Shader "Unlit/Diffuse_v"
 			struct v2f
 			{
 				float4 pos : SV_POSITION;
-				fixed4 color : Color;
+				float3 worldNormal : TEXCOORD0;
+				float3 worldLight : TEXCOORD1;
 			};
 
 			fixed4 _Diffuse;
@@ -44,16 +45,17 @@ Shader "Unlit/Diffuse_v"
 			{
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
-				fixed3 worldNormal = normalize(mul(v.normal,(fixed3x3)unity_WorldToObject));
-				fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz);
-				fixed3 diffuse = _LightColor0.rbg * _Diffuse.rgb * saturate(0.5*dot(worldNormal,worldLight)+0.5);
-				o.color = fixed4(UNITY_LIGHTMODEL_AMBIENT.xyz+diffuse,1.0f);
+				o.worldNormal = v.normal;//normalize(mul(v.normal,(fixed3x3)unity_WorldToObject));
+				o.worldLight = ObjSpaceLightDir(v.vertex);;
+
 				return o;
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				return i.color;
+				fixed3 diffuse = _LightColor0.rbg * _Diffuse.rgb * saturate(0.5*dot(i.worldNormal,i.worldLight)+0.5);
+				fixed4 color = fixed4(UNITY_LIGHTMODEL_AMBIENT.xyz+diffuse,1.0f);
+				return color;
 			}
 			ENDCG
 		}

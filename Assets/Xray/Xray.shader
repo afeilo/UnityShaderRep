@@ -49,7 +49,6 @@
 				float3 normal = mul(unity_ObjectToWorld,v.normal).xyz;
 				half rim = 1.0 - saturate(dot(viewDir,normal));
 				o.color = _RimColor * pow(rim,_RimIntensity);
-				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
 			}
 			
@@ -57,8 +56,6 @@
 			{
 				// sample the texture
 				fixed4 col = i.color;
-				// apply fog
-				UNITY_APPLY_FOG(i.fogCoord, col);
 				return col;
 			}
 			ENDCG
